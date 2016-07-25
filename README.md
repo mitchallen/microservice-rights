@@ -24,6 +24,25 @@ You must use __npm__ __2.7.0__ or higher because of the scoped package name.
 
 ## Usage
 
+Open up a terminal window, create a folder for our app and change to it.  Then setup your npm package dependencies.
+
+    $ npm init
+    $ npm install @mitchallen/microservice-rights --save
+    $ npm install @mitchallen/microservice-token --save
+    $ npm install @mitchallen/microservice-core --save
+    
+Setup a secret key for your token:
+
+    $ export SECRET=mySecret
+
+Create a file called __index.js__ and add the following:
+
+	"use strict";
+
+     let secret = process.env.SECRET;
+     let tokenHandler = require('@mitchallen/microservice-token')(secret);
+     let rightsWare = require('@mitchallen/microservice-rights');
+
 Define a table with roles and a list of what other roles can access something at that level
 
     let table = {
@@ -39,11 +58,45 @@ Define a table with roles and a list of what other roles can access something at
         }
     };
     
-What this means is that only admin users can access URL's for admins.  But admins and user can access URL's designated for users.
+What this mean:
 
-The wildcard role ('*') means that all users with known roles can access it.
+* Only admins can access a URL for admins. 
+* Admins and users can access a URL for users
+* Anyone can access a URL for wildcard ('*') 
+* No one can access a URL designated as __none__.
 
-* * *
+        var authorization = {
+            access: "admin",
+      		table: table
+    	};
+
+	    var options = {
+      		service: {
+                // Get the name and version from package.json
+                name: require("./package").name,
+                version: require("./package").version,
+                verbose: true,
+                port: process.env.SERVICE_PORT || 8004,
+                apiVersion: process.env.API_VERSION || '/v1',
+                method: function (info) {
+                    var router = info.router;
+                    router.use(tokenHandler);
+                    router.get( '/admin/home', 
+                        // Test authorization
+                        rightsWare.isAuthorized( authorization ),
+                        function (req, res) {
+                            var data = {
+                                type: dataType,
+                                status: dataStatus,
+                            };
+                            res.json(data);
+                        });
+                    return router;
+                }
+            }
+        };
+
+The names used above are completely arbitrary. You can use whatever names you like.
 
 ## Testing
 

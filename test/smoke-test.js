@@ -1,5 +1,5 @@
 /**
-    Module: @mitchallen/microservice-core
+    Module: @mitchallen/microservice-rights
       Test: smoke-test
     Author: Mitch Allen
 */
@@ -15,7 +15,7 @@ var request = require('supertest'),
     testPort = process.env.TEST_SERVICE_PORT || 8100,
     testHost = "http://localhost:" + testPort;
 
-let rightsWare = require('../index');;
+let rightsWare = require('../index');
 
 let table = {
     roles: [ "none", "admin", "user", "public" ],
