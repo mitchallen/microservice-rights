@@ -155,6 +155,15 @@ describe('microservice rights smoke test', function() {
         });
     });
 
+    it('should not allow admin role to access none access url', function(done) {
+        checkAccess( {
+            role: "admin", 
+            access: "none", 
+            status: 401,
+            done: done
+        });
+    });
+
     it('should not allow admin role to access unknown access url', function(done) {
         checkAccess( {
             role: "admin", 
@@ -189,6 +198,15 @@ describe('microservice rights smoke test', function() {
             role: "user", 
             access: "*", 
             status: 200,
+            done: done
+        });
+    });
+
+    it('should not allow user role to access none access url', function(done) {
+        checkAccess( {
+            role: "user", 
+            access: "none", 
+            status: 401,
             done: done
         });
     });
@@ -231,6 +249,15 @@ describe('microservice rights smoke test', function() {
         });
     });
 
+    it('should not allow wildcard role to access none access url', function(done) {
+        checkAccess( {
+            role: "*", 
+            access: "none", 
+            status: 401,
+            done: done
+        });
+    });
+
     it('should not allow wild card role to access unknown access url', function(done) {
         checkAccess( {
             role: "*", 
@@ -239,6 +266,36 @@ describe('microservice rights smoke test', function() {
             done: done
         });
     });
+
+    // None Role
+
+    it('should not allow none role to access admin url', function(done) {
+        checkAccess( {
+            role: "none", 
+            access: "admin", 
+            status: 401,
+            done: done
+        });
+    });
+
+    it('should not allow none role to access user url', function(done) {
+        checkAccess( {
+            role: "none", 
+            access: "user", 
+            status: 401,
+            done: done
+        });
+    });
+
+    it('should allow none role to access wildcard url', function(done) {
+        checkAccess( {
+            role: "none", 
+            access: "*", 
+            status: 200,
+            done: done
+        });
+    });
+
 
     // Unknown Role
 
@@ -260,7 +317,17 @@ describe('microservice rights smoke test', function() {
         });
     });
 
+    it('should not allow none role to access user url', function(done) {
+        checkAccess( {
+            role: "none", 
+            access: "user", 
+            status: 401,
+            done: done
+        });
+    });
+
     it('should allow unknown role to access wildcard url', function(done) {
+        // Because wildcard access is public, even unknown should have access.
         checkAccess( {
             role: "unknown", 
             access: "*", 

@@ -24,8 +24,25 @@ You must use __npm__ __2.7.0__ or higher because of the scoped package name.
 
 ## Usage
 
-TODO
+Define a table with roles and a list of what other roles can access something at that level
+
+    let table = {
+        roles: [ "none", "admin", "user", "public" ],
+        rights: {
+            /// required rights : list of who can access links marked with required rights]
+            // link marked admin can only be accessed by admin
+            "admin"  : [ "admin" ], 
+            // link marked user can be accessed by admin and user
+            "user"   : [ "admin", "user" ], 
+            // link marked public can be accessed by all
+            "*"      : [ "admin", "user", "*" ]    
+        }
+    };
     
+What this means is that only admin users can access URL's for admins.  But admins and user can access URL's designated for users.
+
+The wildcard role ('*') means that all users with known roles can access it.
+
 * * *
 
 ## Testing
