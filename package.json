@@ -1,7 +1,7 @@
 {
   "name": "@mitchallen/microservice-rights",
   "version": "0.1.1",
-  "description": "A module for defining rights to access a URL",
+  "description": "module for defining rights to access a URL",
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive --timeout 5000",
