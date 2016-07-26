@@ -2,8 +2,7 @@
 
  let secret = process.env.SECRET || "test-server"; // Don't hard code in production!
  let tokenHandler = require('@mitchallen/microservice-token')(secret);
- // TODO - update to use published module
- let rightsWare = require('../../index');
+ let rightsWare = require('@mitchallen/microservice-rights');
 
  let table = {
     roles: [ "none", "admin", "user", "public" ],
