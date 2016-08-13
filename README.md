@@ -246,6 +246,7 @@ To test, go to the root folder and type (sans __$__):
 ## Repo(s)
 
 * [bitbucket.org/mitchallen/microservice-rights.git](https://bitbucket.org/mitchallen/microservice-rights.git)
+* [github.com/mitchallen/microservice-rights.git](https://github.com/mitchallen/microservice-rights.git)
 
 * * *
 
